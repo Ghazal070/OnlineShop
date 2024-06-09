@@ -17,8 +17,8 @@ public class LoginSubmenu {
         while (true){
             System.out.println("""
                     Enter one of the following options
-                    1- Product one type  
-                    2- Product two type
+                    1- Electronic appliances  
+                    2- Shoes
                     3- Exit
                     """);
             switch (INPUT.scanner.next()){
