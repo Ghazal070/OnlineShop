@@ -3,6 +3,9 @@ package entity;
 public class BaseEntity <T>{
     private T id;
 
+    public BaseEntity() {
+    }
+
     public BaseEntity(T id) {
         this.id = id;
     }

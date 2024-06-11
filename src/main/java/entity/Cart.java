@@ -3,12 +3,12 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart extends BaseEntity<Long>{
+public class Cart extends BaseEntity<Integer>{
 
     private Customer customer;
 //    private List <CartItem> cartItemList = new ArrayList<>();
 
-    public Cart(Long id, Customer customer) {
+    public Cart(Integer id, Customer customer) {
         super(id);
         this.customer = customer;
     }

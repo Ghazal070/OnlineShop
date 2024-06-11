@@ -1,10 +1,11 @@
 package entity;
 
-public class Shop {
+public class Shop extends BaseEntity<Integer> {
 private String name;
 private String url;
 
-    public Shop(String name, String url) {
+    public Shop(Integer id, String name, String url) {
+        super(id);
         this.name = name;
         this.url = url;
     }

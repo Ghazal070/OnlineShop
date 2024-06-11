@@ -2,19 +2,18 @@ package menu.login;
 
 import menu.util.Input;
 import menu.util.Massage;
+import service.CustomerService;
 import util.AuthHolder;
 
 public class LoginMenu {
     private final Input INPUT;
     private final Massage MASSAGE;
-    private final AuthHolder AUTH_HOLDER;
-    private final LoginSubmenu LOGIN_SUBMENU;
+    private final CustomerService customerService;
 
-    public LoginMenu(Input INPUT, Massage MASSAGE, AuthHolder auth_holder, LoginSubmenu login_submenu) {
+    public LoginMenu(Input INPUT, Massage MASSAGE, CustomerService customerService) {
         this.INPUT = INPUT;
         this.MASSAGE = MASSAGE;
-        AUTH_HOLDER = auth_holder;
-        LOGIN_SUBMENU = login_submenu;
+        this.customerService = customerService;
     }
 
     public void show() {
@@ -30,7 +29,8 @@ public class LoginMenu {
                     String username = INPUT.scanner.next();
                     System.out.println(MASSAGE.getInputMassage("password"));
                     String password = INPUT.scanner.next();
-                    //todo
+                    if(customerService.login(username,password)){MASSAGE.getSuccessfulMassage(username);
+                        break login;}
                     System.out.println(MASSAGE.getInCorrectMessage());
                     break;
                 }

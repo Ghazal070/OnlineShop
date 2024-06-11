@@ -2,16 +2,18 @@ package menu.signup;
 
 import menu.util.Input;
 import menu.util.Massage;
+import service.CustomerService;
 
 public class SignupMenu {
     private final Input INPUT;
     private final Massage MASSAGE;
 
+    private final CustomerService customerService;
 
-    public SignupMenu(Input INPUT, Massage MASSAGE) {
+    public SignupMenu(Input INPUT, Massage MASSAGE,CustomerService customerService) {
         this.INPUT = INPUT;
         this.MASSAGE = MASSAGE;
-
+        this.customerService=customerService;
     }
 
     public void show() {
@@ -29,7 +31,8 @@ public class SignupMenu {
                     String username = INPUT.scanner.next();
                     System.out.println(MASSAGE.getInputMassage("password"));
                     String password = INPUT.scanner.next();
-                    //todo
+                    if(customerService.signUp(username,password)){MASSAGE.getSuccessfulMassage(username);
+                    break signupMenu;}
                     System.out.println(MASSAGE.getExistMassage(username));
                 }
                 case "2": {
