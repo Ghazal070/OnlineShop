@@ -7,6 +7,7 @@ public class Cart extends BaseEntity<Integer>{
     public static final String TABLE_NAME = "cart";
     public static final String CUSTOMER_ID = "customer_id";
     private Customer customer;
+    List<CartItem> cartItemList= new ArrayList<CartItem>();
 //    private List <CartItem> cartItemList = new ArrayList<>();
 
     public Cart(Integer id, Customer customer) {

@@ -1,6 +1,7 @@
 package service.impl;
 
 import entity.Cart;
+import entity.CartItem;
 import entity.Customer;
 import repository.CartRepository;
 import service.CartService;
@@ -24,4 +25,8 @@ private final AuthHolder authHolder;
         return baseEntityRepository.save(entity);
     }
 
+    @Override
+    public Boolean add(CartItem cartItem) {
+        return null;
+    }
 }

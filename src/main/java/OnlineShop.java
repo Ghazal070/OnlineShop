@@ -1,5 +1,9 @@
 import entity.Cart;
+import entity.CartItem;
 import entity.Customer;
+import entity.Product;
+import entity.enumration.ProductCategory;
+import entity.enumration.ProductSubType;
 import util.ApplicationContext;
 
 import java.sql.Connection;
@@ -11,40 +15,26 @@ public class OnlineShop {
 //        }catch (Throwable e){
 //            e.getMessage();
 //        }
-     ApplicationContext.getInstance().getMenu().show();
- //       testDatabaseConnection();
+//     ApplicationContext.getInstance().getMenu().show();
+               testDatabaseConnection();
 
     }
 
-//    public static void testDatabaseConnection() {
-//Customer ghazal = ApplicationContext.getInstance().customerService.findByUsername("ghazal");
-//System.out.println(ghazal);
+    public static void testDatabaseConnection() {
 
+//    Product product = ApplicationContext.getInstance().productService.save(new Product("radio", ProductCategory.Electronics,
+//            ProductSubType.RADIO, 5000, 5));
+//    Product product1 = ApplicationContext.getInstance().productService.save(new Product("television", ProductCategory.Electronics,
+//            ProductSubType.TELEVISION, 10000, 10));
+//    Product product3 = ApplicationContext.getInstance().productService.save(new Product("sportShoes", ProductCategory.Shoes,
+//            ProductSubType.SPORT, 2000, 10));
+    Product product4 = ApplicationContext.getInstance().productService.findByID(4);
+    Cart cart = ApplicationContext.getInstance().cartService.findByID(6);
+        ApplicationContext.getInstance().cartItemService.save(new CartItem(product4,cart,1));
+//        System.out.println(product4);
+//        CartItem cartItem = new CartItem(product4,)
+//        ApplicationContext.getInstance().cartItemService.save()
 
-//        Cart cart = ApplicationContext.getInstance().cartService.save(new Cart(),Integer.class);
-//        System.out.println(cart);
-////
-//        System.out.println(ghazal);
-
-//        Customer customer = ApplicationContext.getInstance().customerService.save(new Customer("sara"),Integer.class);
-//        System.out.println(customer);
-////        try (Connection connection = ApplicationContext.getInstance().connection) {
-////            String sql = "SELECT * FROM customer";
-////            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-////                ResultSet resultSet = preparedStatement.executeQuery();
-////                while (resultSet.next()) {
-////                    Customer customer = new Customer();
-////                    customer.setId(resultSet.getInt("id")); // Assuming 'id' is the column name for the customer ID
-////                    customer.setUsername(resultSet.getString("username"));
-////                    customer.setPassword(resultSet.getString("password"));
-////                    System.out.println(customer);
-////                }
-////                System.out.println("Database connection test successful.");
-////            }
-////        } catch (Exception e) {
-////            System.out.println("Error testing database connection: " + e.getMessage());
-////        }
- //   }
-
+}
 }
 

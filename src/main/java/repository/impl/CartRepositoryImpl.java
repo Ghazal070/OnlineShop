@@ -38,7 +38,7 @@ public class CartRepositoryImpl extends BaseEntityRepositoryImpl<Cart, Integer> 
             return entity;
         } catch (Throwable e) {
             e.getStackTrace();
-            throw new RuntimeException("Error In save entity! ");
+            throw new RuntimeException("Error In save cart! ");
         }
     }
 
@@ -65,11 +65,18 @@ public class CartRepositoryImpl extends BaseEntityRepositoryImpl<Cart, Integer> 
 
     @Override
     protected Cart mapResultSetToBaseEntity(ResultSet resultSet) {
+//        try {
+//            Customer customer = new Customer(authHolder.tokenId,authHolder.tokenName);
+//            return new Cart(customer);
+//        } catch (Throwable e) {
+//            throw new RuntimeException("Error In mapping! ");
+//        }
         try {
-            Customer customer = new Customer(authHolder.tokenId,authHolder.tokenName);
-            return new Cart(customer);
+            return new Cart(resultSet.getInt("id"),
+                    new Customer(resultSet.getInt("customer_id"))
+            );
         } catch (Throwable e) {
-            throw new RuntimeException("Error In mapping! ");
+            throw new RuntimeException(e);
         }
     }
 

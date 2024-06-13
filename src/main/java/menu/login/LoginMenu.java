@@ -9,11 +9,15 @@ public class LoginMenu {
     private final Input INPUT;
     private final Massage MASSAGE;
     private final CustomerService customerService;
+    private final AuthHolder authHolder;
+    private final LoginSubmenu loginSubmenu;
 
-    public LoginMenu(Input INPUT, Massage MASSAGE, CustomerService customerService) {
+    public LoginMenu(Input INPUT, Massage MASSAGE, CustomerService customerService, AuthHolder authHolder, LoginSubmenu loginSubmenu) {
         this.INPUT = INPUT;
         this.MASSAGE = MASSAGE;
         this.customerService = customerService;
+        this.authHolder = authHolder;
+        this.loginSubmenu = loginSubmenu;
     }
 
     public void show() {
@@ -31,6 +35,8 @@ public class LoginMenu {
                     String password = INPUT.scanner.next();
                     if(customerService.login(username,password)){
                         System.out.println(MASSAGE.getSuccessfulMassage(username));
+                        loginSubmenu.show();
+                        authHolder.reset();
                         break login;}
                     System.out.println(MASSAGE.getInCorrectMessage());
                     break;

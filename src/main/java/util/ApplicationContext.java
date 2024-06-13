@@ -8,14 +8,22 @@ import menu.main.MainMenu;
 import menu.signup.SignupMenu;
 import menu.util.Input;
 import menu.util.Massage;
+import repository.CartItemRepository;
 import repository.CartRepository;
 import repository.CustomerRepository;
+import repository.ProductRepository;
+import repository.impl.CartItemRepositoryImpl;
 import repository.impl.CartRepositoryImpl;
 import repository.impl.CustomerRepositoryImpl;
+import repository.impl.ProductRepositoryImpl;
+import service.CartItemService;
 import service.CartService;
 import service.CustomerService;
+import service.ProductService;
+import service.impl.CartItemServiceImpl;
 import service.impl.CartServiceImpl;
 import service.impl.CustomerServiceImpl;
+import service.impl.ProductServiceImpl;
 
 import java.sql.Connection;
 
@@ -43,8 +51,10 @@ private final static ApplicationContext Instance = new ApplicationContext();
     public Connection connection;
 //    public CustomerService customerService;
     public CustomerRepository customerRepository;
+    public ProductService productService;
+    public CartItemService cartItemService;
 //    public  CartService cartService;
-
+public CartService cartService;
 
     private ApplicationContext() {
         connection = DataSource.getConnection();
@@ -55,10 +65,14 @@ private final static ApplicationContext Instance = new ApplicationContext();
         LoginSubmenu loginSubmenu = new LoginSubmenu(input,massage);
         CartRepository cartRepository = new CartRepositoryImpl(connection,authHolder);
         customerRepository = new CustomerRepositoryImpl(connection);
-        CartService cartService= new CartServiceImpl(cartRepository,authHolder);
+        cartService= new CartServiceImpl(cartRepository,authHolder);
         CustomerService customerService =new CustomerServiceImpl(customerRepository,authHolder,cartService);
-        LoginMenu loginMenu = new LoginMenu(input,massage,customerService);
+        LoginMenu loginMenu = new LoginMenu(input,massage,customerService, authHolder, loginSubmenu);
         SignupMenu signUpMenu = new SignupMenu(input,massage,customerService);
+        ProductRepository productRepository=new ProductRepositoryImpl(connection);
+        productService =new ProductServiceImpl(productRepository);
+        CartItemRepository cartItemRepository =new CartItemRepositoryImpl(connection);
+        cartItemService = new CartItemServiceImpl(cartItemRepository);
 
         menu = new Menu(input,massage,loginMenu,signUpMenu,mainMenu);
 

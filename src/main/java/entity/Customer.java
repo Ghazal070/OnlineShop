@@ -14,6 +14,9 @@ public class Customer extends BaseEntity<Integer>{
         this.username = username;
         this.password = password;
     }
+    public Customer(Integer id) {
+        super(id);
+    }
     public Customer(){}
     public Customer(String username){
         this.username = username;
