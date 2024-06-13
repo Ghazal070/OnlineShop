@@ -29,7 +29,8 @@ public class LoginMenu {
                     String username = INPUT.scanner.next();
                     System.out.println(MASSAGE.getInputMassage("password"));
                     String password = INPUT.scanner.next();
-                    if(customerService.login(username,password)){MASSAGE.getSuccessfulMassage(username);
+                    if(customerService.login(username,password)){
+                        System.out.println(MASSAGE.getSuccessfulMassage(username));
                         break login;}
                     System.out.println(MASSAGE.getInCorrectMessage());
                     break;

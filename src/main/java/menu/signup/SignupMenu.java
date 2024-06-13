@@ -31,8 +31,9 @@ public class SignupMenu {
                     String username = INPUT.scanner.next();
                     System.out.println(MASSAGE.getInputMassage("password"));
                     String password = INPUT.scanner.next();
-                    if(customerService.signUp(username,password)){MASSAGE.getSuccessfulMassage(username);
-                    break signupMenu;}
+                    if(customerService.signUp(username,password)){
+                        System.out.println(MASSAGE.getSuccessfulMassage(username));
+                        break signupMenu;}
                     System.out.println(MASSAGE.getExistMassage(username));
                 }
                 case "2": {

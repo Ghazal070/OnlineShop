@@ -17,4 +17,11 @@ public class BaseEntity <T>{
     public void setId(T id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "id=" + id +
+                '}';
+    }
 }

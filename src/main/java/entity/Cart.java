@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart extends BaseEntity<Integer>{
-
+    public static final String TABLE_NAME = "cart";
+    public static final String CUSTOMER_ID = "customer_id";
     private Customer customer;
 //    private List <CartItem> cartItemList = new ArrayList<>();
 
@@ -12,8 +13,25 @@ public class Cart extends BaseEntity<Integer>{
         super(id);
         this.customer = customer;
     }
+    public Cart(Customer customer) {
+        this.customer = customer;
+    }
 
-//    public List<CartItem> getCartItemList() {
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "customer=" + customer +
+                "} " + super.toString();
+    }
+    //    public List<CartItem> getCartItemList() {
 //        return cartItemList;
 //    }
 //

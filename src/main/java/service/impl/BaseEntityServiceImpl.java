@@ -13,10 +13,10 @@ public class BaseEntityServiceImpl <T extends BaseEntity<ID>,ID,R extends BaseEn
         this.baseEntityRepository = baseEntityRepository;
     }
 
-    @Override
-    public T save(T entity, Class<ID> idType) {
-        return baseEntityRepository.save(entity,idType);
-    }
+//    @Override
+//    public T save(T entity, Class<ID> idType) {
+//        return baseEntityRepository.save(entity,idType);
+//    }
 
     @Override
     public T findByID(ID id) {
@@ -37,4 +37,5 @@ public class BaseEntityServiceImpl <T extends BaseEntity<ID>,ID,R extends BaseEn
     public boolean existByID(ID id) {
         return baseEntityRepository.existByID(id);
     }
+
 }

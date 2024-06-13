@@ -14,6 +14,14 @@ public class Customer extends BaseEntity<Integer>{
         this.username = username;
         this.password = password;
     }
+    public Customer(){}
+    public Customer(String username){
+        this.username = username;
+    }
+    public Customer(Integer id,String username){
+        super(id);
+        this.username = username;
+    }
 
     public Customer(String username, String password) {
         this.username = username;
@@ -34,5 +42,12 @@ public class Customer extends BaseEntity<Integer>{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "username='" + username + '\'' +
+                "} " + super.toString();
     }
 }

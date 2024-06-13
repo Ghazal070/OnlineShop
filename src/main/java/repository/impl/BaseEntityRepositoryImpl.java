@@ -4,6 +4,7 @@ import entity.BaseEntity;
 import repository.BaseEntityRepository;
 import util.QueryUtil;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,28 +19,32 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID> imp
         this.connection = connection;
     }
 
-    @Override
-    public T save(T entity, Class<ID> idType) {
-        try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(String.format(QueryUtil.INSERT_INTO_QUERY_TEMPLATE, getTableName(),
-                             String.join(",", getColumnNames()), getQuestionMarks(getColumnNames().size()),
-                             PreparedStatement.RETURN_GENERATED_KEYS))) {
-            for (int i = 0; i < getColumnNames().size(); i++) {
-                preparedStatement.setObject(i + 1, getColumnNames().get(i));
-            }
-            int rowAffected = preparedStatement.executeUpdate();
-            if (rowAffected > 0) {
-                ResultSet resultSet = preparedStatement.getGeneratedKeys();
-                if (resultSet.next()) {
-                    entity.setId(idType.cast(resultSet.getObject("id")));
-                }
-                resultSet.close();
-            }
-            return entity;
-        } catch (Throwable e) {
-            throw new RuntimeException("Error In save entity! ", e);
-        }
-    }
+//    @Override
+//    public T save(T entity) {
+//        try (PreparedStatement preparedStatement =
+//                     connection.prepareStatement(String.format(QueryUtil.INSERT_INTO_QUERY_TEMPLATE, getTableName(),
+//                             String.join(",", getColumnNames()), getQuestionMarks(getColumnNames().size()-1),
+//                             PreparedStatement.RETURN_GENERATED_KEYS))) {
+//            for (int i = 0; i < getColumnNames().size(); i++) {
+//                if (entity!=null){
+//                Field field = entity.getClass().getDeclaredField(getColumnNames().get(i));
+//                field.setAccessible(true);
+//                preparedStatement.setObject(i + 1, field.get(entity));
+//                }
+//            }
+//            int rowAffected = preparedStatement.executeUpdate();
+//            if (rowAffected > 0) {
+//                try (ResultSet resultSet = preparedStatement.executeQuery("SELECT LAST_INSERT_ID()")) {
+//                    if (resultSet.next()) {
+//                        entity.setId(idType.cast(resultSet.getObject(1)));
+//                    }
+//                }
+//            }
+//            return entity;
+//        } catch (Throwable e) {
+//            throw new RuntimeException("Error In save entity! ");
+//        }
+//    }
 
     @Override
     public T findByID(ID id) {
@@ -49,7 +54,7 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID> imp
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next() ? mapResultSetToBaseEntity(resultSet) : null;
         } catch (Throwable e) {
-            throw new RuntimeException("Error In find by id! ", e);
+            throw new RuntimeException("Error In find by id! ");
         }
     }
 
@@ -65,7 +70,7 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID> imp
                 }
             }
         } catch (Throwable e) {
-            throw new RuntimeException("Error In find all entity! ", e);
+            throw new RuntimeException("Error In find all entity! ");
         }
         return entityList;
     }
@@ -79,7 +84,7 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID> imp
             return rowAffect > 0;
 
         } catch (Throwable e) {
-            throw new RuntimeException("Error In find by id! ", e);
+            throw new RuntimeException("Error In find by id! ");
         }
     }
 
@@ -92,7 +97,7 @@ public abstract class BaseEntityRepositoryImpl<T extends BaseEntity<ID>, ID> imp
             return resultSet.next();
 
         } catch (Throwable e) {
-            throw new RuntimeException("Error In exist by id! ", e);
+            throw new RuntimeException("Error In exist by id! ");
         }
     }
 
