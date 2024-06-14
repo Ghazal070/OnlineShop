@@ -15,8 +15,8 @@ public class OnlineShop {
 //        }catch (Throwable e){
 //            e.getMessage();
 //        }
-     ApplicationContext.getInstance().getMenu().show();
-  //             testDatabaseConnection();
+        ApplicationContext.getInstance().getMenu().show();
+        //             testDatabaseConnection();
 
     }
 
@@ -28,7 +28,7 @@ public class OnlineShop {
 //            ProductSubType.TELEVISION, 10000, 10));
 //    Product product3 = ApplicationContext.getInstance().productService.save(new Product("sportShoes", ProductCategory.Shoes,
 //            ProductSubType.SPORT, 2000, 10));
-    Product product4 = ApplicationContext.getInstance().productService.findByID(4);
+        Product product4 = ApplicationContext.getInstance().productService.findByID(4);
         System.out.println(product4);
 //    Cart cart = ApplicationContext.getInstance().cartService.findByID(6);
 //    Cart cart = ApplicationContext.getInstance().cartService.findByCustomerID(10);
@@ -40,6 +40,6 @@ public class OnlineShop {
 //        CartItem cartItem = new CartItem(product4,)
 //        ApplicationContext.getInstance().cartItemService.save()
 
-}
+    }
 }
 

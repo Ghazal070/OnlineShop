@@ -68,7 +68,7 @@ public CartService cartService;
         cartItemService = new CartItemServiceImpl(cartItemRepository);
         CartRepository cartRepository = new CartRepositoryImpl(connection,authHolder);
         cartService= new CartServiceImpl(cartRepository,authHolder, productService, cartItemService);
-        LoginSubmenu loginSubmenu = new LoginSubmenu(input,massage, productService, cartService, authHolder);
+        LoginSubmenu loginSubmenu = new LoginSubmenu(input,massage, productService, cartService, authHolder, cartItemService);
         customerRepository = new CustomerRepositoryImpl(connection);
         CustomerService customerService =new CustomerServiceImpl(customerRepository,authHolder,cartService);
         LoginMenu loginMenu = new LoginMenu(input,massage,customerService, authHolder, loginSubmenu);

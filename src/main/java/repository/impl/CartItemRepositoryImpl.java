@@ -11,9 +11,10 @@ import util.QueryUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CartItemRepositoryImpl extends BaseEntityRepositoryImpl<CartItem,Integer> implements CartItemRepository {
+public class CartItemRepositoryImpl extends BaseEntityRepositoryImpl<CartItem, Integer> implements CartItemRepository {
     public CartItemRepositoryImpl(Connection connection) {
         super(connection);
     }
@@ -44,23 +45,23 @@ public class CartItemRepositoryImpl extends BaseEntityRepositoryImpl<CartItem,In
     @Override
     public CartItem update(Integer id, String operator) {
         CartItem cartItem = findByID(id);
-        int countNew= cartItem.getCountInCart();
-        switch (operator){
-            case "+":{
+        int countNew = cartItem.getCountInCart();
+        switch (operator) {
+            case "+": {
                 countNew++;
                 break;
             }
-            case "-":{
+            case "-": {
                 countNew--;
                 break;
             }
         }
         String selectQuery = """
-                                update cart_item set count_in_cart=?
-                                where id=?
-                                """;
+                update cart_item set count_in_cart=?
+                where id=?
+                """;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
-            preparedStatement.setInt(1,countNew);
+            preparedStatement.setInt(1, countNew);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             cartItem.setCountInCart(countNew);
@@ -70,6 +71,7 @@ public class CartItemRepositoryImpl extends BaseEntityRepositoryImpl<CartItem,In
             throw new RuntimeException("Error In update cartItem ! ");
         }
     }
+
     @Override
     public CartItem existByCartIdProductId(Integer cartId, Integer productId) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -78,6 +80,53 @@ public class CartItemRepositoryImpl extends BaseEntityRepositoryImpl<CartItem,In
             preparedStatement.setInt(2, productId);
             ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet.next() ? mapResultSetToBaseEntity(resultSet) : null;
+
+        } catch (Throwable e) {
+            throw new RuntimeException("Error In exist by cartId and productId ! ");
+        }
+    }
+
+    @Override
+    public List<CartItem> showCartItem(Cart cart) {
+        List<CartItem> cartItemList = new ArrayList<>();
+        String query = """
+                select p.name as PName,ci.count_in_cart as CountCart from cart_item ci
+                join product p on p.id = ci.product_id
+                where cart_id =?
+                                """;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, cart.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String productName = resultSet.getString("PName");
+                int countInCart = resultSet.getInt("CountCart");
+                Product product = new Product(productName);
+                CartItem cartItem = new CartItem(product, countInCart);
+                cartItemList.add(cartItem);
+            }
+            return cartItemList;
+
+        } catch (Throwable e) {
+            throw new RuntimeException("Error In exist by cartId and productId ! ");
+        }
+    }
+
+    @Override
+    public Integer calculatePrice(Cart cart) {
+        String query = """
+                SELECT SUM(p.price * ci.count_in_cart) AS total_price
+                FROM cart_item ci
+                         JOIN product p ON p.id = ci.product_id
+                WHERE cart_id = ?;
+                                                """;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, cart.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int totalPrice =0;
+            if (resultSet.next()){
+                totalPrice =resultSet.getInt("total_price");
+            }
+            return totalPrice;
 
         } catch (Throwable e) {
             throw new RuntimeException("Error In exist by cartId and productId ! ");

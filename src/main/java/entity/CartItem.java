@@ -18,17 +18,21 @@ public class CartItem extends  BaseEntity<Integer>{
         this.countInCart = countInCart;
         this.cart =cart;
     }
+    public CartItem(Product product, Integer countInCart) {
+        this.product = product;
+        this.countInCart = countInCart;
+    }
     public CartItem(Product product,Cart cart, Integer countInCart) {
         this.cart=cart;
         this.product = product;
         this.countInCart = countInCart;
     }
+
     @Override
     public String toString() {
         return "CartItem{" +
-                "cart=" + cart +
-                ", product=" + product +
+                "product=" + product +
                 ", countInCart=" + countInCart +
-                "} " + super.toString();
+                "} " ;
     }
 }

@@ -5,6 +5,7 @@ import entity.CartItem;
 import entity.Product;
 import menu.util.Input;
 import menu.util.Massage;
+import service.CartItemService;
 import service.CartService;
 import service.ProductService;
 import util.AuthHolder;
@@ -15,14 +16,16 @@ public class LoginSubmenu {
     private final ProductService productService;
     private final CartService cartService;
     private final AuthHolder authHolder;
+    private final CartItemService cartItemService;
 
 
-    public LoginSubmenu(Input INPUT, Massage MASSAGE, ProductService productService, CartService cartService, AuthHolder authHolder) {
+    public LoginSubmenu(Input INPUT, Massage MASSAGE, ProductService productService, CartService cartService, AuthHolder authHolder, CartItemService cartItemService) {
         this.INPUT = INPUT;
         this.MASSAGE = MASSAGE;
         this.productService = productService;
         this.cartService = cartService;
         this.authHolder = authHolder;
+        this.cartItemService = cartItemService;
     }
 
     public void show() {
@@ -73,7 +76,7 @@ public class LoginSubmenu {
                                 } else {
                                     System.out.println(MASSAGE.getFailMassage("add "));
                                 }
-                                break ;
+                                break;
                             } else {
                                 System.out.println("Product or cart not found.");
                             }
@@ -186,7 +189,7 @@ public class LoginSubmenu {
                                 } else {
                                     System.out.println(MASSAGE.getFailMassage("remove "));
                                 }
-                                break ;
+                                break;
                             } else {
                                 System.out.println("Product or cart not found.");
                             }
@@ -199,10 +202,23 @@ public class LoginSubmenu {
                             System.out.println(MASSAGE.getInvalidMassage());
                     }
                 }
-                case "3": {//print all product
+                case "3": {
+                    Cart cart = cartService.findByCustomerID(authHolder.tokenId);
+                    if (cart != null) {
+                        System.out.println(cartItemService.showCartItem(cart));
+                        break;
+                    }
+                    else {System.out.println("Cart not found.");}
+                    break;
                 }
                 case "4": {
-                    //printPrice of your cart
+                    Cart cart = cartService.findByCustomerID(authHolder.tokenId);
+                    if (cart != null) {
+                        System.out.println(cartItemService.calculatePrice(cart));
+                        break;
+                    }
+                    else {System.out.println("Cart not found.");}
+                    break;
                 }
                 case "5": {
                     System.exit(0);

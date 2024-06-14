@@ -4,6 +4,7 @@ import entity.enumration.ProductCategory;
 import entity.enumration.ProductSubType;
 
 public class Product extends BaseEntity<Integer>{
+
     public static final String TABLE_NAME="product";
     private String name;
     private ProductCategory productCategory;
@@ -24,6 +25,9 @@ public class Product extends BaseEntity<Integer>{
     //if a product add to shop or sells must count change
     public Product(Integer id) {
         super(id);
+    }
+    public Product(String name) {
+        this.name = name;
     }
     public Product(String name, ProductCategory productCategory, ProductSubType productSubType, double price, Integer countInShop) {
         this.name = name;
@@ -75,11 +79,7 @@ public class Product extends BaseEntity<Integer>{
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", productCategory=" + productCategory +
-                ", price=" + price +
-                ", count=" + countInShop +
-                "} " + super.toString();
+        return "name='" + name + '\'' ;
+
     }
 }
