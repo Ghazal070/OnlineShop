@@ -26,6 +26,7 @@ public class LoginSubmenu {
     }
 
     public void show() {
+
         while (true) {
             System.out.println("""
                     Enter one of the following options
@@ -72,7 +73,7 @@ public class LoginSubmenu {
                                 } else {
                                     System.out.println(MASSAGE.getFailMassage("add "));
                                 }
-                                break;
+                                break ;
                             } else {
                                 System.out.println("Product or cart not found.");
                             }
@@ -88,6 +89,7 @@ public class LoginSubmenu {
                             switch (INPUT.scanner.next()) {
                                 case "1":
                                     inputNumber = 4;
+                                    break;
                                 case "2":
                                     inputNumber = 3;
                                 case "3":
@@ -147,10 +149,10 @@ public class LoginSubmenu {
                             Cart cart = cartService.findByCustomerID(authHolder.tokenId);
                             if (product != null && cart != null) {
                                 CartItem cartItem = new CartItem(product, cart, 1);
-                                if (cartService.add(cartItem)) {
-                                    System.out.println(MASSAGE.getSuccessfulMassage("add "));
+                                if (cartService.remove(cartItem)) {
+                                    System.out.println(MASSAGE.getSuccessfulMassage("remove "));
                                 } else {
-                                    System.out.println(MASSAGE.getFailMassage("add "));
+                                    System.out.println(MASSAGE.getFailMassage("remove "));
                                 }
                                 break;
                             } else {
@@ -168,6 +170,8 @@ public class LoginSubmenu {
                             switch (INPUT.scanner.next()) {
                                 case "1":
                                     inputNumber = 4;
+                                    break;
+
                                 case "2":
                                     inputNumber = 3;
                                 case "3":
@@ -177,12 +181,12 @@ public class LoginSubmenu {
                             Cart cart = cartService.findByCustomerID(authHolder.tokenId);
                             if (product != null && cart != null) {
                                 CartItem cartItem = new CartItem(product, cart, 1);
-                                if (cartService.add(cartItem)) {
-                                    System.out.println(MASSAGE.getSuccessfulMassage("add "));
+                                if (cartService.remove(cartItem)) {
+                                    System.out.println(MASSAGE.getSuccessfulMassage("remove "));
                                 } else {
-                                    System.out.println(MASSAGE.getFailMassage("add "));
+                                    System.out.println(MASSAGE.getFailMassage("remove "));
                                 }
-                                break;
+                                break ;
                             } else {
                                 System.out.println("Product or cart not found.");
                             }

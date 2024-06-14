@@ -52,18 +52,14 @@ private final CartItemService cartItemService;
     @Override
     public Boolean remove(CartItem cartItem) {
         if(cartItem!=null){
-            if(productService.findByID(cartItem.getProduct().getId()).getCountInShop()>0){
                 CartItem cartItemWithID= cartItemService.existByCartIdProductId(cartItem.getCart().getId(),cartItem.getProduct().getId());
                 if(cartItemWithID!=null){
                     int countInCart=cartItemWithID.getCountInCart();
-                    cartItemWithID.setCountInCart(countInCart++);
-                    cartItemService.update(cartItemWithID.getId(),"+");
-                    productService.update(cartItem.getProduct().getId(),"-");
-                }else {
-                    cartItemService.save(cartItem);
+                    cartItemWithID.setCountInCart(countInCart--);
+                    cartItemService.update(cartItemWithID.getId(),"-");
+                    productService.update(cartItem.getProduct().getId(),"+");
+                    return true;
                 }
-                return true;
-            }
         }
         return false;
     }
