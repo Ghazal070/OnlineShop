@@ -62,17 +62,17 @@ public CartService cartService;
         Input input = new Input();
         Massage massage = new Massage();
         MainMenu mainMenu = new MainMenu();
-        LoginSubmenu loginSubmenu = new LoginSubmenu(input,massage);
-        CartRepository cartRepository = new CartRepositoryImpl(connection,authHolder);
-        customerRepository = new CustomerRepositoryImpl(connection);
-        cartService= new CartServiceImpl(cartRepository,authHolder);
-        CustomerService customerService =new CustomerServiceImpl(customerRepository,authHolder,cartService);
-        LoginMenu loginMenu = new LoginMenu(input,massage,customerService, authHolder, loginSubmenu);
-        SignupMenu signUpMenu = new SignupMenu(input,massage,customerService);
         ProductRepository productRepository=new ProductRepositoryImpl(connection);
         productService =new ProductServiceImpl(productRepository);
         CartItemRepository cartItemRepository =new CartItemRepositoryImpl(connection);
         cartItemService = new CartItemServiceImpl(cartItemRepository);
+        CartRepository cartRepository = new CartRepositoryImpl(connection,authHolder);
+        cartService= new CartServiceImpl(cartRepository,authHolder, productService, cartItemService);
+        LoginSubmenu loginSubmenu = new LoginSubmenu(input,massage, productService, cartService, authHolder);
+        customerRepository = new CustomerRepositoryImpl(connection);
+        CustomerService customerService =new CustomerServiceImpl(customerRepository,authHolder,cartService);
+        LoginMenu loginMenu = new LoginMenu(input,massage,customerService, authHolder, loginSubmenu);
+        SignupMenu signUpMenu = new SignupMenu(input,massage,customerService);
 
         menu = new Menu(input,massage,loginMenu,signUpMenu,mainMenu);
 

@@ -41,7 +41,7 @@ public class CustomerRepositoryImpl extends BaseEntityRepositoryImpl<Customer, I
     @Override
     protected Customer mapResultSetToBaseEntity(ResultSet resultSet) {
         try {
-            return new Customer(resultSet.getString("username"), resultSet.getString("password"));
+            return new Customer(resultSet.getInt("id"),resultSet.getString("username"), resultSet.getString("password"));
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }

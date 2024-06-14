@@ -80,4 +80,16 @@ public class CartRepositoryImpl extends BaseEntityRepositoryImpl<Cart, Integer> 
         }
     }
 
+    @Override
+    public Cart findByCustomerID(Integer id) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+                String.format(QueryUtil.FIND_BY_CUSTOMER_ID_QUERY_TEMPLATE, getTableName()))) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next() ? mapResultSetToBaseEntity(resultSet) : null;
+        } catch (Throwable e) {
+            throw new RuntimeException("Error In find by id! ");
+        }
+    }
+
 }

@@ -51,9 +51,11 @@ public class ProductRepositoryImpl extends BaseEntityRepositoryImpl<Product, Int
         switch (operator){
             case "+":{
                 countNew++;
+                break;
             }
             case "-":{
                 countNew--;
+                break;
             }
         }
         String selectQuery = """

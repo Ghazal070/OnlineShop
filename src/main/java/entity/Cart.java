@@ -14,6 +14,9 @@ public class Cart extends BaseEntity<Integer>{
         super(id);
         this.customer = customer;
     }
+    public Cart(Integer id) {
+        super(id);
+    }
     public Cart(Customer customer) {
         this.customer = customer;
     }

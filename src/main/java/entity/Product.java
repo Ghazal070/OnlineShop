@@ -22,7 +22,9 @@ public class Product extends BaseEntity<Integer>{
 
     }
     //if a product add to shop or sells must count change
-
+    public Product(Integer id) {
+        super(id);
+    }
     public Product(String name, ProductCategory productCategory, ProductSubType productSubType, double price, Integer countInShop) {
         this.name = name;
         this.productCategory = productCategory;
